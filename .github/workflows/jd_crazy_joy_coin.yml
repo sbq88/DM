@@ -3,7 +3,7 @@ name: crazyJoy 领金币
 on:
   workflow_dispatch:
   schedule:
-    - cron: '11 23 * * *'
+    - cron: '13 23 * * *'
   # watch:
   #       types: started
   # repository_dispatch:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-      URL: "https://raw.githubusercontent.com/jiegto/Actions_JX/master/jd_crazy_joy_coin.js"
+      URL: "https://raw.githubusercontent.com/sbq88/DM/master/jd_crazy_joy_coin.js"
       RUNFILE: "jd_crazy_joy_coin.js"
       JD_COOKIE: ${{ secrets.JD_COOKIE }}
       PUSH_KEY: ${{ secrets.PUSH_KEY }}
