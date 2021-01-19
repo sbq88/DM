@@ -3,7 +3,7 @@ name: 全民开红包
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 17 * * *'
+    - cron: '2 17 * * *'
   # watch:
   #   types: started
   # repository_dispatch:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-      URL: "https://raw.githubusercontent.com/jiegto/Actions_JX/master/jd_redPacket.js"
+      URL: "https://raw.githubusercontent.com/sbq88/DM/master/jd_redPacket.js"
       RUNFILE: "jd_redPacket.js"
       JD_COOKIE: ${{ secrets.JD_COOKIE }}
       JD_DEBUG: ${{ secrets.JD_DEBUG }}
