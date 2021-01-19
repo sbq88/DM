@@ -3,40 +3,48 @@ name: 提交互助码
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 19 * * *'
-  #watch:
-  #  types: started
-  #repository_dispatch:
-  #  types: jd_sharecode
+    - cron: '38 18 * * *'
+  # watch:
+  #       types: started
+  # repository_dispatch:
+  #   types: jd_sharecode
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-      JX_FACTORY_CODE: ${{ secrets.JX_FACTORY_CODE }}
-      JD_FACTORY_CODE: ${{ secrets.JD_FACTORY_CODE }}
-      JD_BEAN_CODE: ${{ secrets.JD_BEAN_CODE }}
-      JD_FARM_CODE: ${{ secrets.JD_FARM_CODE }}
-      JD_PET_CODE: ${{ secrets.JD_PET_CODE }}
-      JD_ZZ_CODE: ${{ secrets.JD_ZZ_CODE }}
-      JD_CRAZYJOY_CODE: ${{ secrets.JD_CRAZYJOY_CODE }}
-      JD_CASH_CODE: ${{ secrets.JD_CASH_CODE }}
+      URL: "https://raw.githubusercontent.com/sbq88/DM/master/jd_get_share_code.js"
+      RUNFILE: "jd_get_share_code.js"
+      JD_COOKIE: ${{ secrets.JD_COOKIE }}
+      PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      BARK_PUSH: ${{ secrets.BARK_PUSH }}
+      BARK_SOUND: ${{ secrets.BARK_SOUND }}
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      TG_USER_ID: ${{ secrets.TG_USER_ID }}
+      DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+      DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+      IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
     steps:
-      - name: Checkout master
-        uses: actions/checkout@master
-      - name: 提交京喜工厂互助码
-        run: curl -v "$JX_FACTORY_CODE"
-      - name: 提交京东工厂互助码
-        run: curl -v "$JD_FACTORY_CODE"
-      - name: 提交种豆得豆互助码
-        run: curl -v "$JD_BEAN_CODE"
-      - name: 提交东东农场互助码
-        run: curl -v "$JD_FARM_CODE"
-      - name: 提交东东萌宠互助码
-        run: curl -v "$JD_PET_CODE"
-      - name: 提交疯狂的joy互助码
-        run: curl -v "$JD_CRAZYJOY_CODE"
-      - name: 提交京东赚赚互助码
-        run: curl -v "$JD_ZZ_CODE"
-      - name: 提交京东签到领现金互助码
-        run: curl -v "$JD_CASH_CODE"
+      - name: Checkout
+        uses: actions/checkout@v2
+        #with:
+        #  repository: Sunert/Scripts
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v2 # 使用 GitHub 官方的缓存 Action。
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
+      - name: npm install
+        if: env.JD_COOKIE
+        run: |
+          npm install
+      - name: '运行 【提交互助码】'
+        if: env.JD_COOKIE
+        run: |
+          node actions.js
