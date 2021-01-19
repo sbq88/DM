@@ -1,4 +1,4 @@
-name: 提交互助码
+name: 提交互助码 任务
 
 on:
   workflow_dispatch:
@@ -44,7 +44,7 @@ jobs:
         if: env.JD_COOKIE
         run: |
           npm install
-      - name: '运行 【提交互助码】'
+      - name: '运行 【提交互助码 任务】'
         if: env.JD_COOKIE
         run: |
           node actions.js
