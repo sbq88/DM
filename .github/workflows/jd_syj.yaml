@@ -3,7 +3,7 @@ name: 十元街
 on:
   workflow_dispatch:
   schedule:
-    - cron: '58 1 * * *'
+    - cron: '58 17 * * *'
   # watch:
   #       types: started
   # repository_dispatch:
