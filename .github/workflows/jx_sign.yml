@@ -3,7 +3,7 @@ name: 京喜签到
 on:
   workflow_dispatch:
   schedule:
-    - cron: '5 16 * * *'
+    - cron: '38 15 * * *'
   # watch:
   #       types: started
   # repository_dispatch:
